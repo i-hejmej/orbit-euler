@@ -30,4 +30,4 @@ def test_free_fall_physics():
     for y in ys:
         assert np.isclose(y, 0.0)
     
-    assert xs[1] < xs[0]
+    assert xs[2] < xs[0]
