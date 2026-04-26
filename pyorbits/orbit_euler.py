@@ -1,6 +1,8 @@
 import numpy as np
 from numba import njit 
 
+__all__ = ["calculate_orbit"]
+
 G = 6.6741 * (10 ** (-11))
 AU = 149597870700
 
