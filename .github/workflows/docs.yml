@@ -1,0 +1,28 @@
+name: pdoc
+
+on:
+  push:
+    branches: [ main ] 
+
+jobs:
+  pdoc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write 
+    steps:
+    - uses: actions/checkout@v4 
+    - uses: actions/setup-python@v5 
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install numpy numba pdoc
+
+    - name: Generate HTML documentation
+      run: python -m pdoc -o html pyorbits
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: html 
