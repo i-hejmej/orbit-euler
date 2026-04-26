@@ -4,7 +4,7 @@ Fast simulator of 2D orbits using JIT compilation (Numba). The project is implem
 ## Documentation
 
 Full API documentation in available here:
-[https://i-hejmej.github.io/orbit-euler/pyorbits/](https://i-hejmej.github.io/orbit-euler/pyorbits/)
+[https://i-hejmej.github.io/orbit-euler/](https://i-hejmej.github.io/orbit-euler/)
 
 ## How to use
 
