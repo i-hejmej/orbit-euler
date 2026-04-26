@@ -48,16 +48,22 @@ def calculate_orbit(*, M_central = M_S, dt=Dt, time_max=T_max, x_0=X_0, y_0=Y_0,
     ----------
     M_central : float, optional
         The mass of the central body in kilograms. Solar mass by default (1.989e30 kg).
+
     dt : float, optional
         Time step used in the simulation in seconds. 900 by default (15 minutes).
+
     time_max : float, optional
         Time of the whole simulation in seconds. 225 years by default.
+
     x_0 : float, optional
         Initial X-axis position in meters. 0 by default.
+
     y_0 : float, optional
         Initial Y-axis position in meters. 0.586 AU by default.
+
     v0_x : float, optional
         Initial X-axis velocity in m/s. 54600 by default.
+
     v0_y : float, optional
         Initial Y-axis velocity in m/s. 0 by default.
     
@@ -65,8 +71,10 @@ def calculate_orbit(*, M_central = M_S, dt=Dt, time_max=T_max, x_0=X_0, y_0=Y_0,
     -------
     Xs : ndarray
         One-dimensional array containing all X posisionts (in AU) of the orbiting body.
+
     Ys : ndarray
         One-dimensional array containing all Y posisionts (in AU) of the orbiting body.
+        
     '''
     steps = int(time_max / dt) 
     Xs, Ys = _calculate_orbit_jit(M_central, dt, steps, x_0, y_0, v_0x, v_0y)
