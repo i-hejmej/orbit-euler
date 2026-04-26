@@ -131,32 +131,40 @@
 </span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="sd">    ----------</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a><span class="sd">    M_central : float, optional</span>
 </span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="sd">        The mass of the central body in kilograms. Solar mass by default (1.989e30 kg).</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="sd">    dt : float, optional</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="sd">        Time step used in the simulation in seconds. 900 by default (15 minutes).</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="sd">    time_max : float, optional</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">        Time of the whole simulation in seconds. 225 years by default.</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="sd">    x_0 : float, optional</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">        Initial X-axis position in meters. 0 by default.</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="sd">    y_0 : float, optional</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">        Initial Y-axis position in meters. 0.586 AU by default.</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="sd">    v0_x : float, optional</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a><span class="sd">        Initial X-axis velocity in m/s. 54600 by default.</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="sd">    v0_y : float, optional</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="sd">        Initial Y-axis velocity in m/s. 0 by default.</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a><span class="sd">    </span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a><span class="sd">    Returns</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="sd">    -------</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="sd">    Xs : ndarray</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="sd">        One-dimensional array containing all X posisionts (in AU) of the orbiting body.</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="sd">    Ys : ndarray</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="sd">        One-dimensional array containing all Y posisionts (in AU) of the orbiting body.</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="sd">    &#39;&#39;&#39;</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_max</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> 
-</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>    <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="n">_calculate_orbit_jit</span><span class="p">(</span><span class="n">M_central</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">v_0x</span><span class="p">,</span> <span class="n">v_0y</span><span class="p">)</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>    <span class="n">Xs</span> <span class="o">/=</span> <span class="n">AU</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>    <span class="n">Ys</span> <span class="o">/=</span> <span class="n">AU</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    
-</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>    <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="sd">    dt : float, optional</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="sd">        Time step used in the simulation in seconds. 900 by default (15 minutes).</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="sd">    time_max : float, optional</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">        Time of the whole simulation in seconds. 225 years by default.</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">    x_0 : float, optional</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="sd">        Initial X-axis position in meters. 0 by default.</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="sd">    y_0 : float, optional</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="sd">        Initial Y-axis position in meters. 0.586 AU by default.</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a><span class="sd">    v0_x : float, optional</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="sd">        Initial X-axis velocity in m/s. 54600 by default.</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="sd">    v0_y : float, optional</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="sd">        Initial Y-axis velocity in m/s. 0 by default.</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="sd">    </span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="sd">    Returns</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="sd">    -------</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a><span class="sd">    Xs : ndarray</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a><span class="sd">        One-dimensional array containing all X posisionts (in AU) of the orbiting body.</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a><span class="sd">    Ys : ndarray</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="sd">        One-dimensional array containing all Y posisionts (in AU) of the orbiting body.</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="sd">        </span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_max</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> 
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>    <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="n">_calculate_orbit_jit</span><span class="p">(</span><span class="n">M_central</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">v_0x</span><span class="p">,</span> <span class="n">v_0y</span><span class="p">)</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>    <span class="n">Xs</span> <span class="o">/=</span> <span class="n">AU</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>    <span class="n">Ys</span> <span class="o">/=</span> <span class="n">AU</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>    
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>    <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
 </span></pre></div>
 
 
@@ -291,32 +299,40 @@
 </span><span id="calculate_orbit-49"><a href="#calculate_orbit-49"><span class="linenos">49</span></a><span class="sd">    ----------</span>
 </span><span id="calculate_orbit-50"><a href="#calculate_orbit-50"><span class="linenos">50</span></a><span class="sd">    M_central : float, optional</span>
 </span><span id="calculate_orbit-51"><a href="#calculate_orbit-51"><span class="linenos">51</span></a><span class="sd">        The mass of the central body in kilograms. Solar mass by default (1.989e30 kg).</span>
-</span><span id="calculate_orbit-52"><a href="#calculate_orbit-52"><span class="linenos">52</span></a><span class="sd">    dt : float, optional</span>
-</span><span id="calculate_orbit-53"><a href="#calculate_orbit-53"><span class="linenos">53</span></a><span class="sd">        Time step used in the simulation in seconds. 900 by default (15 minutes).</span>
-</span><span id="calculate_orbit-54"><a href="#calculate_orbit-54"><span class="linenos">54</span></a><span class="sd">    time_max : float, optional</span>
-</span><span id="calculate_orbit-55"><a href="#calculate_orbit-55"><span class="linenos">55</span></a><span class="sd">        Time of the whole simulation in seconds. 225 years by default.</span>
-</span><span id="calculate_orbit-56"><a href="#calculate_orbit-56"><span class="linenos">56</span></a><span class="sd">    x_0 : float, optional</span>
-</span><span id="calculate_orbit-57"><a href="#calculate_orbit-57"><span class="linenos">57</span></a><span class="sd">        Initial X-axis position in meters. 0 by default.</span>
-</span><span id="calculate_orbit-58"><a href="#calculate_orbit-58"><span class="linenos">58</span></a><span class="sd">    y_0 : float, optional</span>
-</span><span id="calculate_orbit-59"><a href="#calculate_orbit-59"><span class="linenos">59</span></a><span class="sd">        Initial Y-axis position in meters. 0.586 AU by default.</span>
-</span><span id="calculate_orbit-60"><a href="#calculate_orbit-60"><span class="linenos">60</span></a><span class="sd">    v0_x : float, optional</span>
-</span><span id="calculate_orbit-61"><a href="#calculate_orbit-61"><span class="linenos">61</span></a><span class="sd">        Initial X-axis velocity in m/s. 54600 by default.</span>
-</span><span id="calculate_orbit-62"><a href="#calculate_orbit-62"><span class="linenos">62</span></a><span class="sd">    v0_y : float, optional</span>
-</span><span id="calculate_orbit-63"><a href="#calculate_orbit-63"><span class="linenos">63</span></a><span class="sd">        Initial Y-axis velocity in m/s. 0 by default.</span>
-</span><span id="calculate_orbit-64"><a href="#calculate_orbit-64"><span class="linenos">64</span></a><span class="sd">    </span>
-</span><span id="calculate_orbit-65"><a href="#calculate_orbit-65"><span class="linenos">65</span></a><span class="sd">    Returns</span>
-</span><span id="calculate_orbit-66"><a href="#calculate_orbit-66"><span class="linenos">66</span></a><span class="sd">    -------</span>
-</span><span id="calculate_orbit-67"><a href="#calculate_orbit-67"><span class="linenos">67</span></a><span class="sd">    Xs : ndarray</span>
-</span><span id="calculate_orbit-68"><a href="#calculate_orbit-68"><span class="linenos">68</span></a><span class="sd">        One-dimensional array containing all X posisionts (in AU) of the orbiting body.</span>
-</span><span id="calculate_orbit-69"><a href="#calculate_orbit-69"><span class="linenos">69</span></a><span class="sd">    Ys : ndarray</span>
-</span><span id="calculate_orbit-70"><a href="#calculate_orbit-70"><span class="linenos">70</span></a><span class="sd">        One-dimensional array containing all Y posisionts (in AU) of the orbiting body.</span>
-</span><span id="calculate_orbit-71"><a href="#calculate_orbit-71"><span class="linenos">71</span></a><span class="sd">    &#39;&#39;&#39;</span>
-</span><span id="calculate_orbit-72"><a href="#calculate_orbit-72"><span class="linenos">72</span></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_max</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> 
-</span><span id="calculate_orbit-73"><a href="#calculate_orbit-73"><span class="linenos">73</span></a>    <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="n">_calculate_orbit_jit</span><span class="p">(</span><span class="n">M_central</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">v_0x</span><span class="p">,</span> <span class="n">v_0y</span><span class="p">)</span>
-</span><span id="calculate_orbit-74"><a href="#calculate_orbit-74"><span class="linenos">74</span></a>    <span class="n">Xs</span> <span class="o">/=</span> <span class="n">AU</span>
-</span><span id="calculate_orbit-75"><a href="#calculate_orbit-75"><span class="linenos">75</span></a>    <span class="n">Ys</span> <span class="o">/=</span> <span class="n">AU</span>
-</span><span id="calculate_orbit-76"><a href="#calculate_orbit-76"><span class="linenos">76</span></a>    
-</span><span id="calculate_orbit-77"><a href="#calculate_orbit-77"><span class="linenos">77</span></a>    <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
+</span><span id="calculate_orbit-52"><a href="#calculate_orbit-52"><span class="linenos">52</span></a>
+</span><span id="calculate_orbit-53"><a href="#calculate_orbit-53"><span class="linenos">53</span></a><span class="sd">    dt : float, optional</span>
+</span><span id="calculate_orbit-54"><a href="#calculate_orbit-54"><span class="linenos">54</span></a><span class="sd">        Time step used in the simulation in seconds. 900 by default (15 minutes).</span>
+</span><span id="calculate_orbit-55"><a href="#calculate_orbit-55"><span class="linenos">55</span></a>
+</span><span id="calculate_orbit-56"><a href="#calculate_orbit-56"><span class="linenos">56</span></a><span class="sd">    time_max : float, optional</span>
+</span><span id="calculate_orbit-57"><a href="#calculate_orbit-57"><span class="linenos">57</span></a><span class="sd">        Time of the whole simulation in seconds. 225 years by default.</span>
+</span><span id="calculate_orbit-58"><a href="#calculate_orbit-58"><span class="linenos">58</span></a>
+</span><span id="calculate_orbit-59"><a href="#calculate_orbit-59"><span class="linenos">59</span></a><span class="sd">    x_0 : float, optional</span>
+</span><span id="calculate_orbit-60"><a href="#calculate_orbit-60"><span class="linenos">60</span></a><span class="sd">        Initial X-axis position in meters. 0 by default.</span>
+</span><span id="calculate_orbit-61"><a href="#calculate_orbit-61"><span class="linenos">61</span></a>
+</span><span id="calculate_orbit-62"><a href="#calculate_orbit-62"><span class="linenos">62</span></a><span class="sd">    y_0 : float, optional</span>
+</span><span id="calculate_orbit-63"><a href="#calculate_orbit-63"><span class="linenos">63</span></a><span class="sd">        Initial Y-axis position in meters. 0.586 AU by default.</span>
+</span><span id="calculate_orbit-64"><a href="#calculate_orbit-64"><span class="linenos">64</span></a>
+</span><span id="calculate_orbit-65"><a href="#calculate_orbit-65"><span class="linenos">65</span></a><span class="sd">    v0_x : float, optional</span>
+</span><span id="calculate_orbit-66"><a href="#calculate_orbit-66"><span class="linenos">66</span></a><span class="sd">        Initial X-axis velocity in m/s. 54600 by default.</span>
+</span><span id="calculate_orbit-67"><a href="#calculate_orbit-67"><span class="linenos">67</span></a>
+</span><span id="calculate_orbit-68"><a href="#calculate_orbit-68"><span class="linenos">68</span></a><span class="sd">    v0_y : float, optional</span>
+</span><span id="calculate_orbit-69"><a href="#calculate_orbit-69"><span class="linenos">69</span></a><span class="sd">        Initial Y-axis velocity in m/s. 0 by default.</span>
+</span><span id="calculate_orbit-70"><a href="#calculate_orbit-70"><span class="linenos">70</span></a><span class="sd">    </span>
+</span><span id="calculate_orbit-71"><a href="#calculate_orbit-71"><span class="linenos">71</span></a><span class="sd">    Returns</span>
+</span><span id="calculate_orbit-72"><a href="#calculate_orbit-72"><span class="linenos">72</span></a><span class="sd">    -------</span>
+</span><span id="calculate_orbit-73"><a href="#calculate_orbit-73"><span class="linenos">73</span></a><span class="sd">    Xs : ndarray</span>
+</span><span id="calculate_orbit-74"><a href="#calculate_orbit-74"><span class="linenos">74</span></a><span class="sd">        One-dimensional array containing all X posisionts (in AU) of the orbiting body.</span>
+</span><span id="calculate_orbit-75"><a href="#calculate_orbit-75"><span class="linenos">75</span></a>
+</span><span id="calculate_orbit-76"><a href="#calculate_orbit-76"><span class="linenos">76</span></a><span class="sd">    Ys : ndarray</span>
+</span><span id="calculate_orbit-77"><a href="#calculate_orbit-77"><span class="linenos">77</span></a><span class="sd">        One-dimensional array containing all Y posisionts (in AU) of the orbiting body.</span>
+</span><span id="calculate_orbit-78"><a href="#calculate_orbit-78"><span class="linenos">78</span></a><span class="sd">        </span>
+</span><span id="calculate_orbit-79"><a href="#calculate_orbit-79"><span class="linenos">79</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="calculate_orbit-80"><a href="#calculate_orbit-80"><span class="linenos">80</span></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_max</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> 
+</span><span id="calculate_orbit-81"><a href="#calculate_orbit-81"><span class="linenos">81</span></a>    <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="n">_calculate_orbit_jit</span><span class="p">(</span><span class="n">M_central</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">v_0x</span><span class="p">,</span> <span class="n">v_0y</span><span class="p">)</span>
+</span><span id="calculate_orbit-82"><a href="#calculate_orbit-82"><span class="linenos">82</span></a>    <span class="n">Xs</span> <span class="o">/=</span> <span class="n">AU</span>
+</span><span id="calculate_orbit-83"><a href="#calculate_orbit-83"><span class="linenos">83</span></a>    <span class="n">Ys</span> <span class="o">/=</span> <span class="n">AU</span>
+</span><span id="calculate_orbit-84"><a href="#calculate_orbit-84"><span class="linenos">84</span></a>    
+</span><span id="calculate_orbit-85"><a href="#calculate_orbit-85"><span class="linenos">85</span></a>    <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
 </span></pre></div>
 
 
@@ -328,25 +344,32 @@ Output is automaticly scaled to astronomical units. Default settings' output is 
 <h2 id="parameters">Parameters</h2>
 
 <p>M_central : float, optional
-    The mass of the central body in kilograms. Solar mass by default (1.989e30 kg).
-dt : float, optional
-    Time step used in the simulation in seconds. 900 by default (15 minutes).
-time_max : float, optional
-    Time of the whole simulation in seconds. 225 years by default.
-x_0 : float, optional
-    Initial X-axis position in meters. 0 by default.
-y_0 : float, optional
-    Initial Y-axis position in meters. 0.586 AU by default.
-v0_x : float, optional
-    Initial X-axis velocity in m/s. 54600 by default.
-v0_y : float, optional
+    The mass of the central body in kilograms. Solar mass by default (1.989e30 kg).</p>
+
+<p>dt : float, optional
+    Time step used in the simulation in seconds. 900 by default (15 minutes).</p>
+
+<p>time_max : float, optional
+    Time of the whole simulation in seconds. 225 years by default.</p>
+
+<p>x_0 : float, optional
+    Initial X-axis position in meters. 0 by default.</p>
+
+<p>y_0 : float, optional
+    Initial Y-axis position in meters. 0.586 AU by default.</p>
+
+<p>v0_x : float, optional
+    Initial X-axis velocity in m/s. 54600 by default.</p>
+
+<p>v0_y : float, optional
     Initial Y-axis velocity in m/s. 0 by default.</p>
 
 <h2 id="returns">Returns</h2>
 
 <p>Xs : ndarray
-    One-dimensional array containing all X posisionts (in AU) of the orbiting body.
-Ys : ndarray
+    One-dimensional array containing all X posisionts (in AU) of the orbiting body.</p>
+
+<p>Ys : ndarray
     One-dimensional array containing all Y posisionts (in AU) of the orbiting body.</p>
 </div>
 
