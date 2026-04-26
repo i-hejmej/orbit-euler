@@ -1,5 +1,5 @@
 import numpy as np
-from pyorbits.orbit_euler import calculate_orbit 
+from pyorbits import calculate_orbit 
 
 def test_output_array_lengths():
     dt_test = 1000
